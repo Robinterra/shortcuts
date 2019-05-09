@@ -264,7 +264,7 @@ setlocal
     echo.number=%number%>"%resourcefile%"
     echo.version=%version%>>"%resourcefile%"
 
-    "" "%resourcefile%"
+    "%RESGEN_EXE%" "%resourcefile%"
 
 endlocal&exit /b 0
 
