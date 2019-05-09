@@ -27,4 +27,4 @@ Create/Read/Modify in *C:\TEMP* a *test.lnk*.
 
 ## Authors
 
-* **Robin D'Andrea** - *Robinterra* - [PurpleBooth](https://github.com/Robinterra)
+* **Robin D'Andrea** - *Robinterra* - [Robinterra](https://github.com/Robinterra)
