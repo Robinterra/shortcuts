@@ -39,7 +39,7 @@ REM  * Init Variablen
 REM  */
 set CSC_EXE=%windir%\Microsoft.NET\Framework64\v4.0.30319\csc.exe
 set DOXYGEN_EXE=
-set DEFAULT_RESGEN_EXE=%ProgramFiles(x86)%\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\resgen.exe
+set DEFAULT_RESGEN_EXE=%ProgramFiles(x86)%\Microsoft SDKs\Windows\v7.0A\bin\resgen.exe
 set RESGEN_EXE=resgen.exe
 set GIT_EXE=%HOMEDRIVE%\App\Git\bin\git.exe
 set JUST_HELP=
@@ -63,6 +63,7 @@ set RC_doxygenExeNotFound=3000
 set RC_doxygenFailed=4000
 set RC_cscExeNotFound=5000
 set RC_testFailed=6000
+set RC_ResgenExeNotFound=7000
 set RC=0
 
 REM ----------------------------------------------------------------------------------------------
