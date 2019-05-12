@@ -25,6 +25,23 @@ Create/Read/Modify in *C:\TEMP* a *test.lnk*.
 
 * C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe
 
+## Example
+
+### Create new Shortcut
+```
+Shortcuts shortcut = new Shortcuts (  );
+shortcut.TargetPath = @"C:\Users\N0vu2\AppData\Local\Google\Chrome SxS\Application\chrome.exe";
+shortcut.Arguments = "http://wiki.versalitic.com/index.php/Hauptseite";
+shortcut.Write ( @"C:\Users\N0vu2\Desktop\myshortcut.lnk" );
+```
+
+### Modify a Shortcut
+```
+Shortcuts shortcut = new Shortcuts ( @"C:\Users\N0vu2\Desktop\myshortcut.lnk" );
+shortcut.Arguments = "https://github.com";
+shortcut.Write ( @"C:\Users\N0vu2\Desktop\myshortcut.lnk" );
+```
+
 ## Authors
 
 * **Robin D'Andrea** - *Robinterra* - [Robinterra](https://github.com/Robinterra)
