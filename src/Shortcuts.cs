@@ -486,11 +486,11 @@ namespace System.IO
 
             byte[] shortcut = File.ReadAllBytes ( _Path_string );
 
-            shortcut[0x15] = shortcut[0x15] | 0x20; //‭shortcut[0x15] | 0010 0000‬ // Den 6 Bit auf eins setzen!
+            shortcut[0x15] = (byte)( shortcut[0x15] | 0x20 ); //‭shortcut[0x15] | 0010 0000‬ // Den 6 Bit auf eins setzen!
 
             try
             {
-                File.ReadAllBytes ( _Path_string, shortcut );
+                File.WriteAllBytes ( _Path_string, shortcut );
             }
             catch { return false; }
 
