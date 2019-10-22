@@ -17,9 +17,13 @@ namespace Shortcut
 
         private static string IconLocation;
 
+        private static bool Admin = false;
+
         private static bool IsCreate = false;
 
         #endregion vars
+
+        #region methods
 
         public static int Main ( string[] args )
         {
@@ -43,6 +47,7 @@ namespace Shortcut
             if ( !string.IsNullOrEmpty ( Program.TargetPath ) ) neuerShortCut.TargetPath = Program.TargetPath;
             if ( !string.IsNullOrEmpty ( Program.Arguments ) ) neuerShortCut.Arguments = Program.Arguments;
             if ( !string.IsNullOrEmpty ( Program.IconLocation ) ) neuerShortCut.IconLocation = Program.IconLocation;
+            neuerShortCut.StartWithAdmin = Program.Admin;
 
             if ( !string.IsNullOrEmpty ( Program.SavePath ) ) neuerShortCut.Write ( Program.SavePath );
 
@@ -54,6 +59,8 @@ namespace Shortcut
             if ( string.IsNullOrEmpty ( arg ) ) return false;
 
             if ( arg == "--create" ) return Program.IsCreate = true;
+
+            if ( arg == "--Admin" ) return Program.Admin = true;
 
             if ( Program.TestArg ( arg, "--WorkingDirectory:", ref Program.WorkingDirectory ) ) return true;
 
@@ -92,6 +99,9 @@ namespace Shortcut
 
             return true;
         }
+
+        #endregion methods
+
     }
 }
 
