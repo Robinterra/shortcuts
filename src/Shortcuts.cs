@@ -99,6 +99,11 @@ namespace System.IO
          */
         private string windowStyle_string;
 
+        /**
+         * Ausführen mit Admin privilegien
+         */
+        private bool hasAdminPrivileg_bool;
+
         /** [STATIC]
          * Der Temppfad wo die VB Scripte abgelegt werden
          */
@@ -312,6 +317,38 @@ namespace System.IO
 
         // -------------------------------------------------------------
 
+        /**
+         * Setzt den WindowStyle der Verknüpfung
+         *
+         * @return Gibt den WindowStyle der Verknüpfung wieder
+         */
+        public bool StartWithAdmin
+        {
+            /*get
+            {
+                #if (LOGLEVEL_DEBUG)
+                    string methodeName = KLASSE + ".StartWithAdmin GET";
+                    Logging.Trace ( methodeName );
+                    Logging.Debug ( methodeName, "hasAdminPrivileg_bool", hasAdminPrivileg_bool );
+                #endif
+
+                return this.hasAdminPrivileg_bool;
+            }*/
+            set
+            {
+                #if (LOGLEVEL_DEBUG)
+                    string methodeName = KLASSE + ".StartWithAdmin SET";
+                    Logging.Trace ( methodeName );
+                    Logging.Debug ( methodeName, "hasAdminPrivileg_bool", hasAdminPrivileg_bool );
+                    Logging.Debug ( methodeName, "value", value );
+                #endif
+
+                this.hasAdminPrivileg_bool = value;
+            }
+        }
+
+        // -------------------------------------------------------------
+
         #endregion get/set
 
         // -------------------------------------------------------------
@@ -349,6 +386,8 @@ namespace System.IO
             #endif
 
             // -------------------------------
+
+            this.hasAdminPrivileg_bool = false;
 
             Shortcuts.CreateTempVBSFiles (  );
         }
@@ -415,11 +454,47 @@ namespace System.IO
 
             Shortcuts.SetLNKValue ( _Path_string, this.WindowStyle, VBSFileNames.SetWindowStyle );
 
+            if ( this.hasAdminPrivileg_bool ) Shortcuts.WriteAdminPrivilieg ( _Path_string );
+
             // -------------------------------
 
             _Path_string = null;
 
             return File.Exists ( _Path_string );
+        }
+
+        // -------------------------------------------------------------
+
+        /**
+         * Aktiviert im Shortcut die Admin Privilegien
+         *
+         * @param[in] _Path_string (string) Der Pfad wo die Verknüpfung geändert werden soll
+         *
+         * @return (bool) Wenn true zurück gegeben wird gab es keine probleme. Bei false konnte keine admin privilegien aktiviert werden
+         */
+        public static bool WriteAdminPrivilieg ( string _Path_string )
+        {
+            #if (LOGLEVEL_DEBUG)
+                string methodeName = KLASSE + ".WriteAdminPrivilieg ( string _Path_string )";
+                Logging.Trace ( methodeName );
+                Logging.Debug ( methodeName, "_Path_string", _Path_string );
+            #endif
+
+            if ( !File.Exists ( _Path_string ) ) return false;
+
+            // -------------------------------
+
+            byte[] shortcut = File.ReadAllBytes ( _Path_string );
+
+            shortcut[0x15] = shortcut[0x15] | 0x20; //‭shortcut[0x15] | 0010 0000‬ // Den 6 Bit auf eins setzen!
+
+            try
+            {
+                File.ReadAllBytes ( _Path_string, shortcut );
+            }
+            catch { return false; }
+
+            return true;
         }
 
         // -------------------------------------------------------------
@@ -484,6 +559,8 @@ namespace System.IO
             this.HotKey = Shortcuts.GetLNKValue ( _Path_string, VBSFileNames.GetHotKey );
 
             this.WindowStyle = Shortcuts.GetLNKValue ( _Path_string, VBSFileNames.GetWindowSytle );
+
+            this.hasAdminPrivileg_bool = false;
 
             // -------------------------------
 
